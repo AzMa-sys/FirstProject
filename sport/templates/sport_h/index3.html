@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Контейнер для галереи изображений -->
+{% for p in posts %}
+{% if p.photo1 or p.photo2 or p.photo3 or p.photo4 %}
+<h2>{{ p.title }}</h2>
+<div class="container">
+
+  <!-- Изображения полной ширины с текстом номера -->
+  {% for i in y %}
+    {% if p.photos.photo{i} %}
+      <div class="mySlides" style="display: none;">
+        <div class="numbertext">{{ forloop.counter }} / 4</div>
+        <img src="{{ 'p.photo' + i|string }}" style="width:100%">
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <!-- Кнопки «Далее» и «Назад» -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+  <!-- Текст изображения -->
+  <div class="caption-container">
+    <p id="caption"></p>
+  </div>
+
+  <!-- Миниатюрные изображения -->
+  <div class="rows">
+    {% for i in y %}
+      {% if getattr(p, 'photo' + i|string) %}
+        <div class="column">
+          <img class="demo cursor" src="{{ 'p.photo' + i|string }}" style="width:100%" onclick="currentSlide({{ forloop.counter }})" alt="Image {{ forloop.counter }}">
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+let slideIndex = 1; // Инициализируем индекс слайда
+showSlides(slideIndex);
+
+function showSlides(n) {
+  const slides = document.querySelectorAll('.mySlides');
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slides[slideIndex - 1].style.display = "block";
+}
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+</script>
+
+{% endif %}
+{% endfor %
+
+{% endblock %}
+
+
+{% block navigation %}
+<nav>
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+            <li class="pagenum"><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+    {% endif %}
+    {% for p in paginator.page_range  %}
+
+        {% if p == page_obj.number %}
+            <li class="pagenum"><a class="disabled">{{ p }}</a></li>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+            <li class="pagenum"><a href="?page={{ p }}">{{ p }}</a></li>
+        {% endif %}
+
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="pagenum"><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+    {% endif %}
+</ul>
+</nav>
+{% endblock %}

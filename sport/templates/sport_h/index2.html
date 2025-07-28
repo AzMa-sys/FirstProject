@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Контейнер для галереи изображений -->
+{% for p in posts %}
+<div class="gallery-container" data-index="{{ forloop.counter }}">
+  <h2>{{ p.title }}</h2>
+
+  <!-- Изображения полной ширины -->
+  <div class="mySlides">
+    <div class="numbertext">1 / 4</div>
+    <img src="{{ p.photos.photo1.url }}" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">2 / 4</div>
+    <img src="{{ p.photos.photo2.url }}" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">3 / 4</div>
+    <img src="{{ p.photos.photo3.url }}" style="width:100%">
+  </div>
+  <div class="mySlides">
+    <div class="numbertext">4 / 4</div>
+    <img src="{{ p.photos.photo4.url }}" style="width:100%">
+  </div>
+  <!-- Остальные слайды -->
+
+  <!-- Кнопки навигации -->
+  <div class="navigation-buttons">
+    <a class="prev" onclick="plusSlides(-1, {{ forloop.counter }})">&#10094;</a>
+    <a class="next" onclick="plusSlides(1, {{ forloop.counter }})">&#10095;</a>
+  </div>
+
+  <!-- Миниатюры -->
+  <div class="rows">
+    <div class="column">
+      <img class="demo cursor" src="{{ p.photos.photo1.url }}" style="width:100%" onclick="currentSlide(1, {{ forloop.counter }})" alt="Описание 1">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{ p.photos.photo2.url }}" style="width:100%" onclick="currentSlide(2, {{ forloop.counter }})" alt="Описание 2">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{ p.photos.photo3.url }}" style="width:100%" onclick="currentSlide(2, {{ forloop.counter }})" alt="Описание 3">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="{{ p.photos.photo4.url }}" style="width:100%" onclick="currentSlide(2, {{ forloop.counter }})" alt="Описание 4">
+    </div>
+    <!-- Остальные миниатюры -->
+  </div>
+
+  <!-- Описание -->
+  <div class="caption-container">
+    <p id="caption"></p>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+{% block navigation %}
+<nav>
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="pagenum"><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+    {% endif %}
+    {% for p in paginator.page_range %}
+    {% if p == page_obj.number %}
+    <li class="pagenum"><a class="disabled">{{ p }}</a></li>
+    {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+    <li class="pagenum"><a href="?page={{ p }}">{{ p }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="pagenum"><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
