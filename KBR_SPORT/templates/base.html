@@ -1,0 +1,73 @@
+
+{% load static %}
+{% load sport_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ posts.title }}</title>
+    <link type="text/css" href="{% static '/css/styles_s.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/js1.js' %}"></script>
+    <script src="{% static 'js/js3.js' %}"></script>
+    <script src="{% static 'js/js4.js' %}"></script>
+    <script src="{% static 'js/js5.js' %}"></script>
+
+</head>
+<body>
+    <header>
+        <div class="topnav" id="navbar">
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" />
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    {% for m in mainmenu %}
+                        <li><a href="{% url m.url_name %}">{{ m.title }}</a><li>
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:profile' %}">{{ user.username }}</a> | <a href="{% url 'users:logout' %}">Выйти</a><li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}">Вход</a> | <a href="{% url 'users:register' %}">Регистрация</a><li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="row">
+        <div class="side-l">
+
+
+            <div class="tabcontent">
+                <div class="tag">
+                    {% show_all_tags %}
+                </div>
+                <div class="tag">
+                    {% show_category %}
+                </div>
+
+            </div>
+        </div>
+        <div class="main">
+            {% block content %} {% endblock %}
+            {% block navigation %}{% endblock %}
+        </div>
+        <div class="side-r">
+
+
+            <div class="tabcontent">
+
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <p>Some footer content &copy; 2025</p>
+        </div>
+    </footer>
+
+</body>
+</html>
