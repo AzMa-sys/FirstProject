@@ -1,0 +1,11 @@
+# coding: utf-8
+t1 = TagPost.objects.create(tag='Спортивная одежда', slug='sportivnaya-odezhda')
+t2 = TagPost.objects.create(tag='Спортивные аксессуары', slug='sportivnie-acsessuary')
+t3 = TagPost.objects.create(tag='Летние', slug='letnie')
+t4 = TagPost.objects.create(tag='Осенние', slug='osennie')
+t5 = TagPost.objects.create(tag='Зимние', slug='zimnie')
+t6 = TagPost.objects.create(tag='Весенние', slug='vesennie')
+get_ipython().run_line_magic('save', '()')
+a1 = Avi.objects.create(status='В наличии', count=3)
+a2 = Avi.objects.create(status='В наличии', count=2)
+a3 = Avi.objects.create(status='Можно заказать')
