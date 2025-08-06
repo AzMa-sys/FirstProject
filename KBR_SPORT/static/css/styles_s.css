@@ -10,7 +10,7 @@ html {
 }
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #259155;
+    background-color: #2a066d;
     line-height: 8;
     color: #333;
     min-height: 100%;
@@ -497,4 +497,4 @@ ul.pagination {
 .pagenum a:hover {
   background-color: #ddd;
 }
-
+}
